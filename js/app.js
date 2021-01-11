@@ -1,55 +1,48 @@
-let tasks = [];
+const ToDoList = (function() {
 
-// Add Task
-const addTask = function(taskName) {
-  const task = {
-    id: tasks.length + 1,
-    taskName,
-    isDone: false,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+  // Private
+  let tasks = [];
+
+  const _findTaskIndex = function(taskId) {
+    return tasks.findIndex((task) => task.id === taskId);
   };
-  tasks.push(task);
-  return task;
-};
 
+  const _findTask = function(taskId) {
+    return tasks[_findTaskIndex(taskId)];
+  };
 
-// Find Task Index
-const findTaskIndex = function(taskId) {
-  return tasks.findIndex((task) => task.id === taskId);
-};
+  // Public
+  return {
 
-// Find Task
-const findTask = function(taskId) {
-  return tasks[findTaskIndex(taskId)];
-};
+    addTask: function(taskName) {
+      const task = {
+        id: tasks.length + 1,
+        taskName,
+        isDone: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
 
+      tasks.push(task);
+      return task;
+    },
 
-// Delete Task
-const deleteTask = function(taskId) {
-  const taskIndex = findTaskIndex(taskId);
+    deleteTask: function(taskId) {
+      const taskIndex = _findTaskIndex(taskId);
 
-  if (taskIndex !== -1) {
-    tasks.splice(taskIndex, 1);
-    return true;
-  }
+      if (taskIndex !== -1) {
+        tasks.splice(taskIndex, 1);
+        return true;
+      }
 
-  return false;
-};
+      return false;
+    },
 
+    toggleTaskComplete: function(taskId) {
+      const task = _findTask(taskId);
 
-// Complete task
-const toggleTaskComplete = function(taskId) {
-  const task = findTask(taskId);
-
-  task.isDone = !task.isDone;
-  task.updatedAt = new Date();
-};
-
-
-
-
-
-
-
-
+      task.isDone = !task.isDone;
+      task.updatedAt = new Date();
+    },
+  };
+})();
