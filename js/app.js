@@ -1,48 +1,74 @@
-const ToDoList = (function() {
+const taskInput = document.querySelector(".add-task-input");
+const addBtn = document.querySelector(".add-task-btn");
+const taskList = document.querySelector(".task-list");
 
-  // Private
-  let tasks = [];
+class ToDoList {
+  tasks = [];
+}
 
-  const _findTaskIndex = function(taskId) {
-    return tasks.findIndex((task) => task.id === taskId);
+ToDoList.prototype.renderTasks = function () {
+  taskList.innerHTML = this.tasks
+    .map((task) => {
+      return this.createTask(task);
+    })
+    .join("");
+};
+
+ToDoList.prototype.addTask = function (taskName) {
+  const task = {
+    id: this.tasks.length + 1,
+    taskName,
+    isDone: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
 
-  const _findTask = function(taskId) {
-    return tasks[_findTaskIndex(taskId)];
-  };
+  this.tasks = [...this.tasks, task];
+  this.renderTasks();
 
-  // Public
-  return {
+  return task;
+};
 
-    addTask: function(taskName) {
-      const task = {
-        id: tasks.length + 1,
-        taskName,
-        isDone: false,
-        createdAt: new Date(),
+ToDoList.prototype.deleteTask = function (taskId) {
+  this.tasks = this.tasks.filter((task) => task.id !== taskId);
+  this.renderTasks();
+};
+
+ToDoList.prototype.toggleTaskComplete = function (taskId) {
+  return (this.tasks = this.tasks.map((task) => {
+    if (task.id === taskId) {
+      return {
+        ...task,
+        isDone: !task.isDone,
         updatedAt: new Date(),
       };
+    }
 
-      tasks.push(task);
-      return task;
-    },
+    return task;
+  }));
+};
 
-    deleteTask: function(taskId) {
-      const taskIndex = _findTaskIndex(taskId);
+ToDoList.prototype.createTask = function (task) {
+  return `
+  <li class="list-group-item d-list-item mb-1">${task.taskName}
+    <button class="delete-btn float-end"><span>X</span></button>
+  </li>
+  `;
+};
 
-      if (taskIndex !== -1) {
-        tasks.splice(taskIndex, 1);
-        return true;
-      }
+ToDoList.prototype.getTasks = function () {
+  return this.tasks;
+};
 
-      return false;
-    },
+const toDoList = new ToDoList();
 
-    toggleTaskComplete: function(taskId) {
-      const task = _findTask(taskId);
+addBtn.addEventListener("click", (e) => {
+  e.preventDefault();
 
-      task.isDone = !task.isDone;
-      task.updatedAt = new Date();
-    },
-  };
-})();
+  if (!taskInput.value) {
+    return;
+  }
+
+  toDoList.addTask(taskInput.value);
+  taskInput.value = "";
+});
