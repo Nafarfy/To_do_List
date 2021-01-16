@@ -1,6 +1,6 @@
 .d-list-item {
   display: list-item;
-  list-style-position: inside
+  list-style-position: inside;
 }
 
 .delete-btn {
@@ -10,10 +10,19 @@
   border: 1px solid red;
   border-radius: 50%;
   outline: none;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .delete-btn:focus {
   outline: none;
 }
 
+.check-btn {
+  transform: scale(1.4);
+  margin-top: 6px;
+  margin-right: 10px;
+}
+
+.checked {
+  text-decoration: line-through;
+}

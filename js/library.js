@@ -1,10 +1,12 @@
 class ToDoList {
   tasks = [];
+
+  idCount = 1;
 }
 
 ToDoList.prototype.addTask = function (taskName) {
   const task = {
-    id: this.tasks.length + 1,
+    id: this.idCount++,
     taskName,
     isDone: false,
     createdAt: new Date(),
@@ -12,7 +14,6 @@ ToDoList.prototype.addTask = function (taskName) {
   };
 
   this.tasks = [...this.tasks, task];
-
   return task;
 };
 
