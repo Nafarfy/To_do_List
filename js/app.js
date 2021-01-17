@@ -33,5 +33,27 @@
     const node = getTaskTemplate(task);
     const checkBtn = node.querySelector(".check-btn");
     const deleteBtn = node.querySelector(".delete-btn");
+
+    const deleteListener = () => {
+      deleteBtn.removeEventListener("click", deleteListener);
+      checkBtn.removeEventListener("click", checkListener);
+      toDoList.deleteTask(task.id);
+      renderTasks();
+    };
+
+    const checkListener = () => {
+      toDoList.toggleTaskComplete(task.id);
+      renderTasks();
+    };
+
+    checkBtn.addEventListener("click", checkListener);
+    deleteBtn.addEventListener("click", deleteListener);
+    return node;
+  };
+
+  const createTaskNode = function (task) {
+    const node = getTaskTemplate(task);
+    const checkBtn = node.querySelector(".check-btn");
+    const deleteBtn = node.querySelector(".delete-btn");
   };
 })();
