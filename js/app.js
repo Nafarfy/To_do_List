@@ -51,9 +51,11 @@
     return node;
   };
 
-  const createTaskNode = function (task) {
-    const node = getTaskTemplate(task);
-    const checkBtn = node.querySelector(".check-btn");
-    const deleteBtn = node.querySelector(".delete-btn");
-  };
+  const getTaskTemplate = (task) =>
+    document.createRange().createContextualFragment(`
+      <li class="list-group-item d-list-item mb-1 ${task.isDone ? "checked" : ""}">${task.taskName}
+      <input class="check-btn float-start" type="checkbox" ${task.isDone ? "checked" : ""}>
+      <button class="delete-btn float-end">X</button>
+      </li>
+    `);
 })();
