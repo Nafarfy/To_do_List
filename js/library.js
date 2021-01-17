@@ -4,9 +4,14 @@ class ToDoList {
   idCount = 1;
 }
 
+ToDoList.prototype.getNewId = function () {
+  return this.idCount++;
+  // return this.tasks.length > 0 ? this.tasks[this.tasks.length - 1] : 1;
+};
+
 ToDoList.prototype.addTask = function (taskName) {
   const task = {
-    id: this.idCount++,
+    id: this.getNewId(),
     taskName,
     isDone: false,
     createdAt: new Date(),

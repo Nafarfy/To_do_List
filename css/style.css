@@ -9,18 +9,12 @@
   background: none;
   border: 1px solid red;
   border-radius: 50%;
-  outline: none;
-  transition: all 0.5s;
-}
-
-.delete-btn:focus {
-  outline: none;
 }
 
 .check-btn {
   transform: scale(1.4);
-  margin-top: 6px;
-  margin-right: 10px;
+  margin-top: 0.35rem;
+  margin-right: 0.7rem;
 }
 
 .checked {
