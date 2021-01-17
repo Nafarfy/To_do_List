@@ -8,6 +8,14 @@
     return;
   }
 
+  addTaskForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    toDoList.addTask(taskInput.value);
+    renderTasks();
+    taskInput.value = "";
+  });
+
   const toDoList = new ToDoList();
 
   const renderTasks = function () {
@@ -26,12 +34,4 @@
     const checkBtn = node.querySelector(".check-btn");
     const deleteBtn = node.querySelector(".delete-btn");
   };
-
-  addTaskForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    toDoList.addTask(taskInput.value);
-    renderTasks();
-    taskInput.value = "";
-  });
 })();
