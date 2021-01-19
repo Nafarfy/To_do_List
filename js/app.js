@@ -21,16 +21,10 @@
     taskList.append(listNodes);
   };
 
-  const updateLocalStorage = () => {
-    localStorage.setItem("tasks", JSON.stringify(toDoList.getTasks()));
-    localStorage.setItem("idCount", JSON.stringify(toDoList.idCount));
-  };
-
   addTaskForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     toDoList.addTask(taskInput.value);
-    updateLocalStorage();
     renderTasks();
     taskInput.value = "";
   });
@@ -44,13 +38,11 @@
       deleteBtn.removeEventListener("click", deleteListener);
       checkBtn.removeEventListener("click", checkListener);
       toDoList.deleteTask(task.id);
-      updateLocalStorage();
       renderTasks();
     };
 
     const checkListener = () => {
       toDoList.toggleTaskComplete(task.id);
-      updateLocalStorage();
       renderTasks();
     };
 
@@ -66,14 +58,4 @@
         <button class="delete-btn float-end">X</button>
       </li>
     `);
-
-  localStorage.tasks
-    ? (toDoList.tasks = JSON.parse(localStorage.getItem("tasks")))
-    : (toDoList.tasks = []);
-
-  localStorage.idCount
-    ? (toDoList.idCount = JSON.parse(localStorage.getItem("idCount")))
-    : (toDoList.idCount = 1);
-
-  renderTasks();
 })();
