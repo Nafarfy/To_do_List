@@ -1,0 +1,22 @@
+.d-list-item {
+  display: list-item;
+  list-style-position: inside;
+}
+
+.delete-btn {
+  font-weight: bold;
+  color: red;
+  background: none;
+  border: 1px solid red;
+  border-radius: 50%;
+}
+
+.check-btn {
+  transform: scale(1.4);
+  margin-top: 0.35rem;
+  margin-right: 0.7rem;
+}
+
+.checked {
+  text-decoration: line-through;
+}

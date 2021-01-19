@@ -1,48 +1,61 @@
-const ToDoList = (function() {
+(function () {
+  const taskInput = document.querySelector(".add-task-input");
+  const addTaskForm = document.querySelector(".add-task-form");
+  const taskList = document.querySelector(".task-list");
 
-  // Private
-  let tasks = [];
+  if (typeof ToDoList === "undefined") {
+    alert("There is no ToDoList class");
+    return;
+  }
 
-  const _findTaskIndex = function(taskId) {
-    return tasks.findIndex((task) => task.id === taskId);
+  const toDoList = new ToDoList();
+
+  const renderTasks = () => {
+    const listNodes = document.createDocumentFragment();
+
+    toDoList.getTasks().map((task) => {
+      listNodes.append(createTaskNode(task));
+    });
+
+    taskList.innerHTML = "";
+    taskList.append(listNodes);
   };
 
-  const _findTask = function(taskId) {
-    return tasks[_findTaskIndex(taskId)];
+  addTaskForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    toDoList.addTask(taskInput.value);
+    renderTasks();
+    taskInput.value = "";
+  });
+
+  const createTaskNode = (task) => {
+    const node = getTaskTemplate(task);
+    const checkBtn = node.querySelector(".check-btn");
+    const deleteBtn = node.querySelector(".delete-btn");
+
+    const deleteListener = () => {
+      deleteBtn.removeEventListener("click", deleteListener);
+      checkBtn.removeEventListener("click", checkListener);
+      toDoList.deleteTask(task.id);
+      renderTasks();
+    };
+
+    const checkListener = () => {
+      toDoList.toggleTaskComplete(task.id);
+      renderTasks();
+    };
+
+    checkBtn.addEventListener("click", checkListener);
+    deleteBtn.addEventListener("click", deleteListener);
+    return node;
   };
 
-  // Public
-  return {
-
-    addTask: function(taskName) {
-      const task = {
-        id: tasks.length + 1,
-        taskName,
-        isDone: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-
-      tasks.push(task);
-      return task;
-    },
-
-    deleteTask: function(taskId) {
-      const taskIndex = _findTaskIndex(taskId);
-
-      if (taskIndex !== -1) {
-        tasks.splice(taskIndex, 1);
-        return true;
-      }
-
-      return false;
-    },
-
-    toggleTaskComplete: function(taskId) {
-      const task = _findTask(taskId);
-
-      task.isDone = !task.isDone;
-      task.updatedAt = new Date();
-    },
-  };
+  const getTaskTemplate = (task) =>
+    document.createRange().createContextualFragment(`
+      <li class="list-group-item d-list-item mb-1 ${task.isDone ? "checked" : ""}">${task.taskName}
+        <input class="check-btn float-start" type="checkbox" ${task.isDone ? "checked" : ""}>
+        <button class="delete-btn float-end">X</button>
+      </li>
+    `);
 })();
