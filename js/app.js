@@ -8,17 +8,9 @@
     return;
   }
 
-  addTaskForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    toDoList.addTask(taskInput.value);
-    renderTasks();
-    taskInput.value = "";
-  });
-
   const toDoList = new ToDoList();
 
-  const renderTasks = function () {
+  const renderTasks = () => {
     const listNodes = document.createDocumentFragment();
 
     toDoList.getTasks().map((task) => {
@@ -29,7 +21,21 @@
     taskList.append(listNodes);
   };
 
-  const createTaskNode = function (task) {
+  const updateLocalStorage = () => {
+    localStorage.setItem("tasks", JSON.stringify(toDoList.getTasks()));
+    localStorage.setItem("idCount", JSON.stringify(toDoList.idCount));
+  };
+
+  addTaskForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    toDoList.addTask(taskInput.value);
+    updateLocalStorage();
+    renderTasks();
+    taskInput.value = "";
+  });
+
+  const createTaskNode = (task) => {
     const node = getTaskTemplate(task);
     const checkBtn = node.querySelector(".check-btn");
     const deleteBtn = node.querySelector(".delete-btn");
@@ -38,11 +44,13 @@
       deleteBtn.removeEventListener("click", deleteListener);
       checkBtn.removeEventListener("click", checkListener);
       toDoList.deleteTask(task.id);
+      updateLocalStorage();
       renderTasks();
     };
 
     const checkListener = () => {
       toDoList.toggleTaskComplete(task.id);
+      updateLocalStorage();
       renderTasks();
     };
 
@@ -54,8 +62,18 @@
   const getTaskTemplate = (task) =>
     document.createRange().createContextualFragment(`
       <li class="list-group-item d-list-item mb-1 ${task.isDone ? "checked" : ""}">${task.taskName}
-      <input class="check-btn float-start" type="checkbox" ${task.isDone ? "checked" : ""}>
-      <button class="delete-btn float-end">X</button>
+        <input class="check-btn float-start" type="checkbox" ${task.isDone ? "checked" : ""}>
+        <button class="delete-btn float-end">X</button>
       </li>
     `);
+
+  localStorage.tasks
+    ? (toDoList.tasks = JSON.parse(localStorage.getItem("tasks")))
+    : (toDoList.tasks = []);
+
+  localStorage.idCount
+    ? (toDoList.idCount = JSON.parse(localStorage.getItem("idCount")))
+    : (toDoList.idCount = 1);
+
+  renderTasks();
 })();
