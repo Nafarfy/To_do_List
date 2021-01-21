@@ -1,12 +1,12 @@
 class ToDoList {
   tasks = [];
 
-  idCount = 1;
+  // idCount;
 }
 
 ToDoList.prototype.getNewId = function () {
-  return this.idCount++;
-  // return this.tasks.length > 0 ? this.tasks[this.tasks.length - 1] : 1;
+  // return this.tasks.length > 0 ? this.tasks.length + 1 : 1;
+  return Math.random();
 };
 
 ToDoList.prototype.addTask = function (taskName) {
@@ -38,6 +38,10 @@ ToDoList.prototype.toggleTaskComplete = function (taskId) {
 
     return task;
   }));
+};
+
+ToDoList.prototype.setTasks = function (value) {
+  return (this.tasks = value);
 };
 
 ToDoList.prototype.getTasks = function () {

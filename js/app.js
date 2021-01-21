@@ -23,7 +23,6 @@
 
   const updateLocalStorage = () => {
     localStorage.setItem("tasks", JSON.stringify(toDoList.getTasks()));
-    localStorage.setItem("idCount", JSON.stringify(toDoList.idCount));
   };
 
   addTaskForm.addEventListener("submit", (e) => {
@@ -68,12 +67,8 @@
     `);
 
   localStorage.tasks
-    ? (toDoList.tasks = JSON.parse(localStorage.getItem("tasks")))
-    : (toDoList.tasks = []);
-
-  localStorage.idCount
-    ? (toDoList.idCount = JSON.parse(localStorage.getItem("idCount")))
-    : (toDoList.idCount = 1);
+    ? toDoList.setTasks(JSON.parse(localStorage.getItem("tasks")))
+    : toDoList.setTasks([]);
 
   renderTasks();
 })();
