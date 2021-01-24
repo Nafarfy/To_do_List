@@ -1,14 +1,14 @@
 class ToDoList {
   tasks = [];
 
-  constructor(localS, params) {
+  constructor(localS, methods) {
     this.tasks = localS;
-    this.params = params;
+    this.methods = methods;
   }
 }
 
-ToDoList.prototype.listenToChanges = function () {
-  this.params();
+ToDoList.prototype.callback = function () {
+  this.methods();
 };
 
 ToDoList.prototype.getNewId = function () {
@@ -25,13 +25,13 @@ ToDoList.prototype.addTask = function (taskName) {
   };
 
   this.tasks = [...this.tasks, task];
-  this.listenToChanges();
+  this.callback();
   return task;
 };
 
 ToDoList.prototype.deleteTask = function (taskId) {
   this.tasks = this.tasks.filter((task) => task.id !== taskId);
-  this.listenToChanges();
+  this.callback();
 };
 
 ToDoList.prototype.toggleTaskComplete = function (taskId) {
@@ -46,7 +46,7 @@ ToDoList.prototype.toggleTaskComplete = function (taskId) {
 
     return task;
   });
-  this.listenToChanges();
+  this.callback();
 };
 
 ToDoList.prototype.setTasks = function (value) {
