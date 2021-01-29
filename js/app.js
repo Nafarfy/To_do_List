@@ -3,7 +3,7 @@ const app = (() => {
   const addTaskForm = document.querySelector(".add-task-form");
   const taskList = document.querySelector(".task-list");
 
-  const toDoList = new ToDoList(JSON.parse(localStorage.tasks), () => {
+  const toDoList = new ToDoList(LocalStorage.initialTasks(), () => {
     renderTasks();
     updateLocalStorage();
   });
