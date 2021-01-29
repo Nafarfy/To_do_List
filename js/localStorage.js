@@ -1,6 +1,6 @@
 const localStorageModule = (() => {
   const saveItem = (key, value) => {
-    return localStorage.setItem(key, value);
+    return localStorage.setItem(key, JSON.stringify(value));
   };
 
   const deleteItem = (key) => {

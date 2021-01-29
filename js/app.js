@@ -20,7 +20,7 @@ const app = (() => {
   };
 
   const updateLocalStorage = () => {
-    localStorageModule.saveItem("tasks", JSON.stringify(toDoList.getTasks()));
+    localStorageModule.saveItem("tasks", toDoList.getTasks());
   };
 
   addTaskForm.addEventListener("submit", (e) => {
