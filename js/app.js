@@ -3,13 +3,10 @@ const app = (() => {
   const addTaskForm = document.querySelector(".add-task-form");
   const taskList = document.querySelector(".task-list");
 
-  const toDoList = new ToDoList(
-    JSON.parse(localStorage.tasks),
-    (methods = function () {
-      renderTasks();
-      updateLocalStorage();
-    })
-  );
+  const toDoList = new ToDoList(JSON.parse(localStorage.tasks), () => {
+    renderTasks();
+    updateLocalStorage();
+  });
 
   const renderTasks = () => {
     const listNodes = document.createDocumentFragment();
