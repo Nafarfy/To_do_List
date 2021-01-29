@@ -1,24 +1,12 @@
-(function () {
+const app = (() => {
   const taskInput = document.querySelector(".add-task-input");
   const addTaskForm = document.querySelector(".add-task-form");
   const taskList = document.querySelector(".task-list");
 
-  const init = function () {
-    if (typeof ToDoList === "undefined") {
-      alert("There is no ToDoList class");
-      return;
-    }
-
+  const toDoList = new ToDoList(JSON.parse(localStorage.tasks), () => {
     renderTasks();
-  };
-
-  const toDoList = new ToDoList(
-    JSON.parse(localStorage.tasks),
-    (params = function () {
-      renderTasks();
-      updateLocalStorage();
-    })
-  );
+    updateLocalStorage();
+  });
 
   const renderTasks = () => {
     const listNodes = document.createDocumentFragment();
@@ -62,13 +50,27 @@
     return node;
   };
 
-  const getTaskTemplate = (task) =>
-    document.createRange().createContextualFragment(`
-  <li class="list-group-item d-list-item mb-1 ${task.isDone ? "checked" : ""}">${task.taskName}
-  <input class="check-btn float-start" type="checkbox" ${task.isDone ? "checked" : ""}>
-  <button class="delete-btn float-end">X</button>
-  </li>
-  `);
+  const getTaskTemplate = (task) => {
+    return document.createRange().createContextualFragment(`
+    <li class="list-group-item d-list-item mb-1 ${task.isDone ? "checked" : ""}">${task.taskName}
+    <input class="check-btn float-start" type="checkbox" ${task.isDone ? "checked" : ""}>
+    <button class="delete-btn float-end">X</button>
+    </li>
+    `);
+  };
 
-  init();
+  const init = () => {
+    if (typeof ToDoList === "undefined") {
+      alert("There is no ToDoList class");
+      return;
+    }
+
+    renderTasks();
+  };
+
+  return {
+    init,
+  };
 })();
+
+app.init();
