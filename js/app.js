@@ -3,7 +3,7 @@ const app = (() => {
   const addTaskForm = document.querySelector(".add-task-form");
   const taskList = document.querySelector(".task-list");
 
-  const toDoList = new ToDoList(localStorageModule.initialItems("tasks"), () => {
+  const toDoList = new ToDoList(storage.getItems("tasks"), () => {
     renderTasks();
     updateLocalStorage();
   });
@@ -20,7 +20,11 @@ const app = (() => {
   };
 
   const updateLocalStorage = () => {
-    localStorageModule.saveItem("tasks", toDoList.getTasks());
+    storage.saveItem("tasks", toDoList.getTasks(), () => {
+      setTimeout(() => {
+        alert("Task has been saved");
+      }, 1000);
+    });
   };
 
   addTaskForm.addEventListener("submit", (e) => {
