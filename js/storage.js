@@ -9,13 +9,18 @@ const storage = (() => {
     onItemDeleted();
   };
 
-  const getItems = (key) => {
-    return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : [];
+  const loadItem = (key, onItemLoaded) => {
+    const storageItem = localStorage.getItem(key);
+    const loadedItem = storageItem
+      ? JSON.parse(storageItem)
+      : console.log(`no ${key} in local storage`);
+    onItemLoaded();
+    return loadedItem;
   };
 
   return {
     saveItem,
-    getItems,
+    loadItem,
     deleteItem,
   };
 })();
