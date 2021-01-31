@@ -7,11 +7,16 @@ const app = (() => {
     storage.loadItem("tasks", () => {
       setTimeout(() => {
         console.log("Tasks has been loaded");
-      }, 1000);
+      }, 500);
     }),
     () => {
       renderTasks();
       updateLocalStorage();
+    },
+    () => {
+      setTimeout(() => {
+        console.log("ToDoList has been created");
+      }, 1000);
     }
   );
 
