@@ -1,10 +1,9 @@
 class ToDoList {
   tasks = [];
 
-  constructor(initialTasks, taskUpdateCallback, onListCreated) {
+  constructor(initialTasks, taskUpdateCallback) {
     this.tasks = initialTasks || [];
     this.taskUpdateCallback = taskUpdateCallback;
-    onListCreated();
   }
 }
 

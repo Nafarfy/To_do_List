@@ -14,8 +14,7 @@ const storage = (() => {
     const loadedItem = storageItem
       ? JSON.parse(storageItem)
       : console.log(`no ${key} in local storage`);
-    onItemLoaded();
-    return loadedItem;
+    onItemLoaded(loadedItem);
   };
 
   return {

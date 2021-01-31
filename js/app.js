@@ -3,22 +3,15 @@ const app = (() => {
   const addTaskForm = document.querySelector(".add-task-form");
   const taskList = document.querySelector(".task-list");
 
-  const toDoList = new ToDoList(
-    storage.loadItem("tasks", () => {
-      setTimeout(() => {
-        console.log("Tasks has been loaded");
-      }, 500);
-    }),
-    () => {
+  let toDoList;
+
+  storage.loadItem("tasks", (loadedItem) => {
+    alert("Loading tasks");
+    toDoList = new ToDoList(loadedItem, () => {
       renderTasks();
       updateLocalStorage();
-    },
-    () => {
-      setTimeout(() => {
-        console.log("ToDoList has been created");
-      }, 1000);
-    }
-  );
+    });
+  });
 
   const renderTasks = () => {
     const listNodes = document.createDocumentFragment();
