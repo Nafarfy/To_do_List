@@ -1,12 +1,12 @@
 const storage = (() => {
   const saveItem = (key, value, onValueSaved) => {
     localStorage.setItem(key, JSON.stringify(value));
-    onValueSaved();
+    setTimeout(onValueSaved, 1000);
   };
 
   const deleteItem = (key, onItemDeleted) => {
     localStorage.removeItem(key);
-    onItemDeleted();
+    setTimeout(onItemDeleted, 1000);
   };
 
   const loadItem = (key, onItemLoaded) => {
@@ -14,7 +14,10 @@ const storage = (() => {
     const loadedItem = storageItem
       ? JSON.parse(storageItem)
       : console.log(`no ${key} in local storage`);
-    onItemLoaded(loadedItem);
+
+    setTimeout(() => {
+      onItemLoaded(loadedItem);
+    }, 1000);
   };
 
   return {

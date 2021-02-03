@@ -1,17 +1,10 @@
 const app = (() => {
+  const app = document.querySelector(".app");
   const taskInput = document.querySelector(".add-task-input");
   const addTaskForm = document.querySelector(".add-task-form");
   const taskList = document.querySelector(".task-list");
 
   let toDoList;
-
-  storage.loadItem("tasks", (loadedItem) => {
-    alert("Loading tasks");
-    toDoList = new ToDoList(loadedItem, () => {
-      renderTasks();
-      updateLocalStorage();
-    });
-  });
 
   const renderTasks = () => {
     const listNodes = document.createDocumentFragment();
@@ -24,21 +17,12 @@ const app = (() => {
     taskList.append(listNodes);
   };
 
-  const updateLocalStorage = () => {
-    console.log("Saving tasks...");
+  const saveTasks = () => {
+    // app.classList.add("app-loading");
     storage.saveItem("tasks", toDoList.getTasks(), () => {
-      setTimeout(() => {
-        console.log("Task has been saved");
-      }, 1000);
+      app.classList.remove("app-loading");
     });
   };
-
-  addTaskForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    toDoList.addTask(taskInput.value);
-    taskInput.value = "";
-  });
 
   const createTaskNode = (task) => {
     const node = getTaskTemplate(task);
@@ -70,12 +54,25 @@ const app = (() => {
   };
 
   const init = () => {
-    if (typeof ToDoList === "undefined") {
-      alert("There is no ToDoList class");
-      return;
-    }
+    storage.loadItem("tasks", (tasks) => {
+      initList(tasks);
+      app.classList.remove("app-loading");
+    });
+  };
+
+  const initList = (tasks) => {
+    toDoList = new ToDoList(tasks, () => {
+      renderTasks();
+      saveTasks();
+    });
 
     renderTasks();
+
+    addTaskForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      toDoList.addTask(taskInput.value);
+      taskInput.value = "";
+    });
   };
 
   return {

@@ -33,24 +33,27 @@
     <div class="container mt-5">
       <div class="col-sm-10 mx-auto">
         <div class="card p-2">
-          <div class="row">
-            <div class="col-sm-4 border-end">
-              <h3 class="card-title text-center mb-3">Add Task</h3>
-              <form class="add-task-form" action="" method="POST">
-                <input
-                  required
-                  type="text"
-                  class="form-control add-task-input"
-                  placeholder="New Task"
-                />
-                <button type="submit" class="add-task-btn btn btn-outline-primary px-4 my-3">
-                  Add Task
-                </button>
-              </form>
-            </div>
-            <div class="col-sm-8 border-left">
-              <h3 class="card-title text-center">Tasks</h3>
-              <ol class="task-list list-group list-group-flush overflow-hidden"></ol>
+          <div class="app app-loading">
+            <div class="app-loader">Loading...</div>
+            <div class="app-content row">
+              <div class="col-sm-4 border-end">
+                <h3 class="card-title text-center mb-3">Add Task</h3>
+                <form class="add-task-form" action="" method="POST">
+                  <input
+                    required
+                    type="text"
+                    class="form-control add-task-input"
+                    placeholder="New Task"
+                  />
+                  <button type="submit" class="add-task-btn btn btn-outline-primary px-4 my-3">
+                    Add Task
+                  </button>
+                </form>
+              </div>
+              <div class="col-sm-8 border-left">
+                <h3 class="card-title text-center">Tasks</h3>
+                <ol class="task-list list-group list-group-flush overflow-hidden"></ol>
+              </div>
             </div>
           </div>
         </div>
